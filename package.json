@@ -1,0 +1,11 @@
+{
+  "name": "Symphony_test",
+  "private": true,
+  "version": "0.0.1",
+  "description": "A tutorial application on Symfony2",
+//  "repository": "https://github.com/angular/angular-phonecat",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.7.7"
+  }
+}
