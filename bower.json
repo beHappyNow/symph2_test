@@ -1,0 +1,29 @@
+{
+  "name": "symphony_test",
+  "description": "A tutorial application on Symfony2",
+  "version": "0.0.1",
+  "homepage": "https://github.com/beHappyNow/symph2_test.git",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.5.x",
+    "angular-animate": "1.5.x",
+    "angular-mocks": "1.5.x",
+    "angular-resource": "1.5.x",
+    "angular-route": "1.5.x",
+    "bootstrap": "3.3.x",
+    "jquery": "2.2.x"
+  },
+  "authors": [
+    "beHappyNow <artemb.step@gmail.com>"
+  ],
+  "main": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/bundles/bower_components",
+    "test",
+    "tests"
+  ]
+}

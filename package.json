@@ -3,8 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "description": "A tutorial application on Symfony2",
-//  "repository": "https://github.com/angular/angular-phonecat",
-  "license": "MIT",
+  "repository": "https://github.com/beHappyNow/symph2_test.git",
   "devDependencies": {
     "bower": "^1.7.7"
   }

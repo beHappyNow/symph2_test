@@ -1,4 +1,4 @@
 {
-  "directory": "web/bundles/bower_components",
-  "interactive": false
+  "directory": "src/AppBundle/Resources/public/app/bower_components",
+  "interactive": true
 }

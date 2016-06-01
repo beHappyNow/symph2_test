@@ -83,3 +83,12 @@ doctrine_migrations:
     namespace: Application\Migrations
     table_name: migration_versions
     name: Application Migrations
+
+# File Upload Configuration
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        test_image:
+            uri_prefix:         /img/test
+            upload_destination: %kernel.root_dir%/../web/img/test

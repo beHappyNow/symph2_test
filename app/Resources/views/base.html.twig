@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-{#<html>#}
-<html manifest="{{ asset('cache.manifest') }}">
+<html>
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-        <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-        <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+        <script src="{{ asset('bundles/app/app/bower_components/jquery/dist/jquery.js') }}"></script>
+        <script src="{{ asset('bundles/app/app/bower_components/angular/angular.js') }}"></script>
+        <script src="{{ asset('bundles/app/app/bower_components/angular-file-upload/dist/angular-file-upload.js') }}"></script>
+        <script src="{{ asset('bundles/app/app.module.js') }}"></script>
         {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('bundles/app/app/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body>
+    <body ng-app="testApp">
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

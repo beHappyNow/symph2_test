@@ -6,6 +6,8 @@ use AppBundle\Entity\Product;
 use AppBundle\Entity\Category;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -91,6 +93,57 @@ class DefaultController extends Controller
         $em->persist($category);
         $em->persist($product);
         $em->flush();
+
+        return new Response(
+            'Saved new product with id: '.$product->getId()
+            .' and new category with id: '.$category->getId()
+        );
+    }
+
+    /**
+     * @Route("/savefile", name="save_file")
+     * @param Request $request
+     * @return Response
+     */
+    public function saveFileAction( Request $request)
+    {
+        $uploaded = $request->files->get('file');
+        var_dump($uploaded);
+
+        $someNewFilename = $uploaded->getClientOriginalName();
+        $moved = $uploaded->move('/home/dev49/www/symf.loc/web/img/', $someNewFilename);
+
+        var_dump($moved);
+
+        $product = new Product();
+        $form = $this->createFormBuilder($product)
+            ->add('imageFile', FileType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+        var_dump($form['imageFile']->getData());die();
+
+//        $uploaded->move('/home/dev49/www/symf.loc/web/img/', $someNewFilename);
+
+
+        $category = new Category();
+        $category->setName('file upload TEST');
+        $product->setName('Earphones');
+        $product->setImageName('imageFile');
+        $product->setPrice(33.65);
+        $product->setDescription('file upload test!');
+
+
+        // relate this product to the category
+        $product->setCategory($category);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($category);
+        $em->persist($product);
+        $em->flush();
+        $product->upload();
+        var_dump($product->getImageFile());
+        die();
 
         return new Response(
             'Saved new product with id: '.$product->getId()

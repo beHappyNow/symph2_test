@@ -14,6 +14,18 @@
     <input type="button" class="my_butt" value="Get" />
     <div id="target" style="height: 120px;"></div>
     <input type="button" class="my_butt_stop" value="Stop" />
+
+    <div ng-controller="AppController">
+        <input type="file" nv-file-select uploader="uploader"/><br/>
+        <ul>
+            <li ng-repeat="item in uploader.queue">
+                Name: <span ng-bind="item.file.name"></span><br/>
+                <button ng-click="item.upload()">upload</button>
+            </li>
+        </ul>
+    </div>
+
+
 {% endblock %}
 
 {% block stylesheets %}
