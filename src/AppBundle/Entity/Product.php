@@ -43,9 +43,9 @@ class Product
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="test_image", fileNameProperty="imageName")
      *
-     * @var File
+     * @var UploadedFile
      */
     private $imageFile;
 
@@ -56,6 +56,13 @@ class Product
      */
     private $imageName;
 
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
+
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -64,13 +71,21 @@ class Product
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     * @param File $image
      *
      * @return Product
      */
     public function setImageFile(UploadedFile $image = null)
     {
         $this->imageFile = $image;
+
+        if ($image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
     }
 
     /**
@@ -79,6 +94,12 @@ class Product
     public function getImageFile()
     {
         return $this->imageFile;
+    }
+
+    public function setUpdatedAt()
+    {
+        $this->updatedAt = new \DateTime('now');
+        return $this;
     }
 
 

@@ -6,5 +6,6 @@ angular.module('testApp', [
     //'phoneDetail',
     //'phoneList',
 ]).controller('AppController', function($scope, FileUploader) {
-    $scope.uploader = new FileUploader({url:'/savefile'});
+    var uploader = $scope.uploader = new FileUploader({url:'/savefile', alias:"imageFile",formData:[{save:"saved"}]});
+    uploader.onSuccessItem = function(item, response, status, headers) {console.log("!@#");$scope.uploader.removeFromQueue(item)};
 });

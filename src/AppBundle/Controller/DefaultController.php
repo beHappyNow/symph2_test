@@ -7,6 +7,7 @@ use AppBundle\Entity\Category;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -107,43 +108,68 @@ class DefaultController extends Controller
      */
     public function saveFileAction( Request $request)
     {
-        $uploaded = $request->files->get('file');
+        $uploaded = $request->files->get('imageFile');
         var_dump($uploaded);
+        var_dump($request->request);
+//
+//        $someNewFilename = $uploaded->getClientOriginalName();
+//        $moved = $uploaded->move('/home/dev49/www/symf.loc/web/img/', $someNewFilename);
+//
+//        var_dump($moved);
 
-        $someNewFilename = $uploaded->getClientOriginalName();
-        $moved = $uploaded->move('/home/dev49/www/symf.loc/web/img/', $someNewFilename);
-
-        var_dump($moved);
+//        var_dump($request);
 
         $product = new Product();
-        $form = $this->createFormBuilder($product)
+        $defaultData = array('message' => 'Type your message here');
+        $form = $this->createFormBuilder($defaultData)
             ->add('imageFile', FileType::class)
+            ->add('save', SubmitType::class, array('label' => 'Create Task'))
             ->getForm();
 
         $form->handleRequest($request);
-        var_dump($form['imageFile']->getData());die();
+
+        var_dump($form->isSubmitted());
+
+
+//        var_dump($form['imageFile']);die();
+        var_dump($product);die();
+
 
 //        $uploaded->move('/home/dev49/www/symf.loc/web/img/', $someNewFilename);
+        $category = $this->getDoctrine()
+            ->getRepository('AppBundle:Category')
+            ->find(8);
 
-
-        $category = new Category();
+        if (!$category) {
+            throw $this->createNotFoundException(
+                'No product found for id 8'
+            );
+        }
         $category->setName('file upload TEST');
         $product->setName('Earphones');
         $product->setImageName('imageFile');
         $product->setPrice(33.65);
         $product->setDescription('file upload test!');
+        $product->setUpdatedAt();
 
 
         // relate this product to the category
         $product->setCategory($category);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($category);
-        $em->persist($product);
-        $em->flush();
-        $product->upload();
-        var_dump($product->getImageFile());
-        die();
+        $subm = $form->isSubmitted();
+        $valid = $form->isValid();
+
+        if (true) {
+            echo "!!!!!!";
+//            return $this->redirectToRoute('app_lucky_number');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
+//        $product->upload();
+            var_dump($product->getImageFile());
+        }
+
+//        die();
 
         return new Response(
             'Saved new product with id: '.$product->getId()
